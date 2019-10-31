@@ -3,7 +3,7 @@ import { Strategy } from 'passport-linkedin-oauth2';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 
-const BASE_URL = `http://localhost:${process.env.PORT || 3000}`;
+const BASE_URL = `https://calm-waters-99106.herokuapp.com`;
 
 @Injectable()
 export class LinkedInStrategy extends PassportStrategy(Strategy) {
