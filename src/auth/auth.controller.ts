@@ -22,7 +22,7 @@ export class AuthController {
       httpOnly: true,
     });
 
-    return req.user;
+    res.send(req.user);
   }
 
   @Get('/me')
