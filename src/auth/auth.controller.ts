@@ -21,6 +21,8 @@ export class AuthController {
     res.cookie('x-token', token, {
       httpOnly: true,
     });
+
+    return req.user;
   }
 
   @Get('/me')
