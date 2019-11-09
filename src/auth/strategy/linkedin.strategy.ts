@@ -1,4 +1,3 @@
-import { StrategyNames } from './index';
 import { Strategy } from 'passport-linkedin-oauth2';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
@@ -14,7 +13,11 @@ export class LinkedInStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(_, __, ___, profile, done: Function) {
-    done(null, profile);
+  async validate(_, access_token, refresh_token, profile, done: Function) {
+    done(null, {
+      ...profile,
+      access_token,
+      refresh_token,
+    });
   }
 }

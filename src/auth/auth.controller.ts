@@ -4,6 +4,7 @@ import { StrategyNames } from './strategy/index';
 import { Controller, Get, UseGuards, Res, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response, Request } from 'express';
+import { AuthRequiredGuard } from './guards/auth.guard';
 
 @Controller('/auth')
 export class AuthController {
@@ -25,6 +26,7 @@ export class AuthController {
     res.send(req.user);
   }
 
+  @UseGuards(AuthRequiredGuard)
   @Get('/me')
   async me(@Req() req) {
     return req.user || {};
