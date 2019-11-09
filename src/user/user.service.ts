@@ -21,4 +21,12 @@ export class UserService {
       linkedInId,
     });
   }
+
+  async findById(id: string) {
+    return this.userRepo.findOrThrow({
+      where: {
+        id,
+      },
+    });
+  }
 }
