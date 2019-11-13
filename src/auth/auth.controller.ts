@@ -1,3 +1,4 @@
+import { ApiUseTags, ApiOAuth2Auth } from '@nestjs/swagger';
 import { Profile } from './interfaces/profile';
 import { AuthService } from './auth.service';
 import { StrategyNames } from './strategy/index';
@@ -6,10 +7,12 @@ import { AuthGuard } from '@nestjs/passport';
 import { Response, Request } from 'express';
 import { AuthRequiredGuard } from './guards/auth.guard';
 
+@ApiUseTags('auth')
 @Controller('/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOAuth2Auth(['profile'])
   @UseGuards(AuthGuard(StrategyNames.LINKEDIN_STRATEGY))
   @Get('/linkedin')
   async linkedIn() {}

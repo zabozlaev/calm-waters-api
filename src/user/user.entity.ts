@@ -1,9 +1,12 @@
+import { LabelEntity } from './../label/label.entity';
+import { PipelineEntity } from './../pipeline/pipeline.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   Index,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('users')
@@ -23,4 +26,10 @@ export class UserEntity {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => PipelineEntity, pipeline => pipeline.user)
+  pipelines: PipelineEntity[];
+
+  @OneToMany(() => LabelEntity, label => label.user)
+  labels: LabelEntity[];
 }

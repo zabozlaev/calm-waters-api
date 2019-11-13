@@ -1,9 +1,15 @@
-import { UserEntity } from './user/user.entity';
+import { entities } from './shared/entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthMiddleware } from './auth/middleware/auth.middleware';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { TagsModule } from './tags/tags.module';
+import { PipelineModule } from './pipeline/pipeline.module';
+import { StageModule } from './stage/stage.module';
+import { DealModule } from './deal/deal.module';
+import { LabelModule } from './label/label.module';
+import { HistoryModule } from './history/history.module';
 
 @Module({
   imports: [
@@ -16,10 +22,16 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.DATABASE_PASSWORD,
       synchronize: true,
       keepConnectionAlive: true,
-      entities: [UserEntity],
+      entities,
     }),
     UserModule,
     AuthModule,
+    TagsModule,
+    PipelineModule,
+    StageModule,
+    DealModule,
+    LabelModule,
+    HistoryModule,
   ],
   controllers: [],
   providers: [],

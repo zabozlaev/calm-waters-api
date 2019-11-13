@@ -1,14 +1,14 @@
 import { CreateUserDto } from './dtos/createUser';
-import { BaseRepo } from './../shared/baseRepo';
 import { UserEntity } from './user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepo: BaseRepo<UserEntity>,
+    private readonly userRepo: Repository<UserEntity>,
   ) {}
 
   create(data: CreateUserDto) {
@@ -23,7 +23,7 @@ export class UserService {
   }
 
   async findById(id: string) {
-    return this.userRepo.findOrThrow({
+    return this.userRepo.findOneOrFail({
       where: {
         id,
       },
