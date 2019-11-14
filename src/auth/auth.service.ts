@@ -36,6 +36,22 @@ export class AuthService {
     });
   }
 
+  async random() {
+    let [user] = await this.userService.find({
+      take: 1,
+    });
+
+    if (!user) {
+      user = await this.userService.create({
+        linkedInId: 'some-id',
+        displayName: 'Random User',
+        avatar: 'None',
+      });
+    }
+
+    return this.signToken(user);
+  }
+
   private signToken({
     id,
     linkedInId,
@@ -51,9 +67,7 @@ export class AuthService {
       sign(
         payload,
         process.env.JWT_SECRET,
-        {
-          expiresIn: '7h',
-        },
+        { expiresIn: '7h' },
         (err, encoded) => {
           if (err) {
             reject(err);

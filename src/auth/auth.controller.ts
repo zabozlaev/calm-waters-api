@@ -11,6 +11,7 @@ import {
   Req,
   HttpCode,
   HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response, Request } from 'express';
@@ -46,5 +47,20 @@ export class AuthController {
   @Get('/me')
   async me(@Req() req) {
     return req.user || {};
+  }
+
+  @Get('/random')
+  async random(@Res() res: Response, @Req() req: Request) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new HttpException('Not allowed in prod.', HttpStatus.FORBIDDEN);
+    }
+
+    const token = await this.authService.random();
+
+    res.cookie('x-token', token, {
+      httpOnly: true,
+    });
+
+    res.send(req.user);
   }
 }

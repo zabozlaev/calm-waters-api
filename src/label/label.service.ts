@@ -1,9 +1,10 @@
+import { UpdateLabelDto } from './dtos/updateLabel.dto';
 import { LabelsResponse } from './dtos/labelsResponse';
 import { PaginationParams } from './../shared/dtos/paginationParams';
 import { UserService } from './../user/user.service';
 import { CreateLabelDto } from './dtos/createLabel.dto';
 import { LabelEntity } from './label.entity';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -37,5 +38,28 @@ export class LabelService {
     });
 
     return { data, total };
+  }
+
+  async update(id: string, { name }: UpdateLabelDto, userId: string) {
+    const label = await this.findForUser(id, userId);
+    label.name = name;
+
+    return this.labelRepo.save(label);
+  }
+
+  async findForUser(id: string, userId: string) {
+    const label = await this.labelRepo
+      .createQueryBuilder('label')
+      .where('id = :id AND "userId" = :userId', { id, userId })
+      .getOne();
+
+    if (!label) {
+      throw new HttpException(
+        'No label found for such user',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return label;
   }
 }

@@ -2,7 +2,7 @@ import { CreateUserDto } from './dtos/createUser';
 import { UserEntity } from './user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, FindManyOptions } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -28,5 +28,9 @@ export class UserService {
         id,
       },
     });
+  }
+
+  find(options: FindManyOptions<UserEntity> = {}) {
+    return this.userRepo.find(options);
   }
 }
