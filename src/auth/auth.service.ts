@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { sign, verify } from 'jsonwebtoken';
-import { TokenPayload } from './interfaces/tokenPayload';
+import { TokenPayload } from './dtos/tokenPayload';
 import { UserEntity } from './../user/user.entity';
 import { Profile } from './interfaces/profile';
 import { UserService } from './../user/user.service';

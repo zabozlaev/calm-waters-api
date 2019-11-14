@@ -4,7 +4,6 @@ import { AuthMiddleware } from './auth/middleware/auth.middleware';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { TagsModule } from './tags/tags.module';
 import { PipelineModule } from './pipeline/pipeline.module';
 import { StageModule } from './stage/stage.module';
 import { DealModule } from './deal/deal.module';
@@ -26,7 +25,6 @@ import { HistoryModule } from './history/history.module';
     }),
     UserModule,
     AuthModule,
-    TagsModule,
     PipelineModule,
     StageModule,
     DealModule,

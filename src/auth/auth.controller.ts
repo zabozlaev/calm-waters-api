@@ -1,8 +1,17 @@
-import { ApiUseTags, ApiOAuth2Auth } from '@nestjs/swagger';
+import { UserEntity } from './../user/user.entity';
+import { ApiUseTags, ApiOAuth2Auth, ApiOkResponse } from '@nestjs/swagger';
 import { Profile } from './interfaces/profile';
 import { AuthService } from './auth.service';
 import { StrategyNames } from './strategy/index';
-import { Controller, Get, UseGuards, Res, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  UseGuards,
+  Res,
+  Req,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response, Request } from 'express';
 import { AuthRequiredGuard } from './guards/auth.guard';
@@ -13,6 +22,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiOAuth2Auth(['profile'])
+  @HttpCode(HttpStatus.PERMANENT_REDIRECT)
   @UseGuards(AuthGuard(StrategyNames.LINKEDIN_STRATEGY))
   @Get('/linkedin')
   async linkedIn() {}
@@ -29,6 +39,9 @@ export class AuthController {
     res.send(req.user);
   }
 
+  @ApiOkResponse({
+    type: UserEntity,
+  })
   @UseGuards(AuthRequiredGuard)
   @Get('/me')
   async me(@Req() req) {

@@ -2,7 +2,7 @@ import { PaginationParams } from './../shared/dtos/paginationParams';
 import { CreateLabelDto } from './dtos/createLabel.dto';
 import { AuthRequiredGuard } from './../auth/guards/auth.guard';
 import { LabelService } from './label.service';
-import { ApiUseTags } from '@nestjs/swagger';
+import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 import { Controller, Post, UseGuards, Body, Get, Query } from '@nestjs/common';
 import { UserId } from '../user/user.decorator';
 

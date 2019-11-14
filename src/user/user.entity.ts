@@ -8,22 +8,28 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 @Entity('users')
 export class UserEntity {
+  @ApiModelProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ApiModelProperty()
   @Column()
   displayName: string;
 
+  @ApiModelProperty()
   @Column({ nullable: true })
   avatar: string;
 
+  @ApiModelProperty()
   @Index()
   @Column()
   linkedInId: string;
 
+  @ApiModelProperty()
   @CreateDateColumn()
   createdAt: Date;
 

@@ -1,4 +1,4 @@
-import { TokenPayload } from './../auth/interfaces/tokenPayload';
+import { TokenPayload } from '../auth/dtos/tokenPayload';
 import { createParamDecorator } from '@nestjs/common';
 
 export const UserId = createParamDecorator((_, req) => {
