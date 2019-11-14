@@ -16,7 +16,6 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('Calm-Waters')
     .setVersion('1.0')
-    .addTag('Calm-Waters')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
