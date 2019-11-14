@@ -1,0 +1,17 @@
+sudo: required
+
+services:
+  - docker
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-2
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+  app: 'calm-waters'
+  env: 'CalmWaters-env'
+  bucket_name: elasticbeanstalk-us-east-2-300803066242
+  bucket_path: 'calm-waters'
+  on:
+    branch: 'master'
