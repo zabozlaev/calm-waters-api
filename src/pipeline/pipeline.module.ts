@@ -9,5 +9,6 @@ import { Module } from '@nestjs/common';
   imports: [TypeOrmModule.forFeature([PipelineEntity]), UserModule],
   providers: [PipelineService],
   controllers: [PipelineController],
+  exports: [PipelineService],
 })
 export class PipelineModule {}

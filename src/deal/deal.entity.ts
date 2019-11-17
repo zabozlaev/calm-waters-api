@@ -24,8 +24,8 @@ export class DealEntity {
   @ManyToOne(() => LabelEntity)
   label: LabelEntity;
 
-  @ManyToOne(() => StageEntity)
-  stage: StageEntity;
+  @ManyToOne(() => StageEntity, { nullable: true })
+  stage?: StageEntity;
 
   @CreateDateColumn()
   created: Date;
