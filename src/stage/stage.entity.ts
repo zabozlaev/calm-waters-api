@@ -16,6 +16,6 @@ export class StageEntity {
   @Index()
   name: string;
 
-  @ManyToOne(() => PipelineEntity)
+  @ManyToOne(() => PipelineEntity, pipeline => pipeline.stages)
   pipeline: PipelineEntity;
 }

@@ -55,15 +55,20 @@ export class StageService {
   }
 
   async findForUser(id: string, userId: string) {
-    const stage = await this.stageRepo.findOne({
-      relations: ['pipeline'],
-      where: {
-        id,
-        pipeline: {
-          userId,
-        },
-      },
-    });
+    const [stage] = await this.stageRepo.query(`
+      SELECT s.* FROM stages s INNER JOIN pipelines p ON p.id = s."pipelineId" WHERE p."userId" = '${userId}' AND s.id = '${id}'
+    `);
+
+    // const stage = await this.stageRepo.findOne({
+    //   relations: ['pipeline'],
+    //   select: ['id', 'name'],
+    //   where: {
+    //     id,
+    //     pipeline: {
+    //       userId,
+    //     },
+    //   },
+    // });
 
     return stage;
   }
