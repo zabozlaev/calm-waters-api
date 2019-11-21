@@ -16,6 +16,8 @@ export class StageEntity {
   @Index()
   name: string;
 
-  @ManyToOne(() => PipelineEntity, pipeline => pipeline.stages)
+  @ManyToOne(() => PipelineEntity, pipeline => pipeline.stages, {
+    onDelete: 'CASCADE',
+  })
   pipeline: PipelineEntity;
 }

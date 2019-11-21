@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StageEntity } from './stage.entity';
@@ -6,6 +6,7 @@ import { CreateStageDto } from './dtos/createStage.dto';
 import { PipelineService } from '../pipeline/pipeline.service';
 import { PaginationParams } from '../shared/dtos/paginationParams';
 import { StagesResponse } from './dtos/stagesResponse';
+import { UpdateStageDto } from './dtos/updateStage.dto';
 
 @Injectable()
 export class StageService {
@@ -54,21 +55,22 @@ export class StageService {
     return { data, total };
   }
 
+  async update(id: string, { name }: UpdateStageDto, userId: string) {
+    const stage = await this.findForUser(id, userId);
+
+    stage.name = name;
+
+    return this.stageRepo.save(stage);
+  }
+
   async findForUser(id: string, userId: string) {
     const [stage] = await this.stageRepo.query(`
       SELECT s.* FROM stages s INNER JOIN pipelines p ON p.id = s."pipelineId" WHERE p."userId" = '${userId}' AND s.id = '${id}'
     `);
 
-    // const stage = await this.stageRepo.findOne({
-    //   relations: ['pipeline'],
-    //   select: ['id', 'name'],
-    //   where: {
-    //     id,
-    //     pipeline: {
-    //       userId,
-    //     },
-    //   },
-    // });
+    if (!stage) {
+      throw new HttpException('Stage was not found', HttpStatus.NOT_FOUND);
+    }
 
     return stage;
   }

@@ -6,6 +6,7 @@ import {
   Get,
   Query,
   Param,
+  Patch,
 } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 import { StageService } from './stage.service';
@@ -37,6 +38,17 @@ export class StageController {
   @Post('/')
   async create(@Body() body: CreateStageDto, @UserId() userId: string) {
     const data = await this.stageService.create(body, userId);
+
+    return data;
+  }
+
+  @Patch('/:id')
+  async update(
+    @Param('id') id: string,
+    @Body() body,
+    @UserId() userId: string,
+  ) {
+    const data = await this.stageService.update(id, body, userId);
 
     return data;
   }
